@@ -91,12 +91,12 @@ namespace FlightSim.NET
             return new Quaternion(q.n / s, q.v.x / s, q.v.y / s, q.v.z / s);
         }
 
-        static float QGetAngle(Quaternion q)
+        public static float QGetAngle(Quaternion q)
         {
             return (float)(2 * Math.Acos(q.n));
         }
 
-        static Vector QGetAxis(Quaternion q)
+        public static Vector QGetAxis(Quaternion q)
         {
             Vector v;
             float m;
@@ -110,12 +110,12 @@ namespace FlightSim.NET
                 return v / m;
         }
 
-        static Quaternion QRotate(Quaternion q1, Quaternion q2)
+        public static Quaternion QRotate(Quaternion q1, Quaternion q2)
         {
             return q1 * q2 * (~q1);
         }
 
-        static Vector QVRotate(Quaternion q, Vector v)
+        public static Vector QVRotate(Quaternion q, Vector v)
         {
             Quaternion t;
 
@@ -125,7 +125,7 @@ namespace FlightSim.NET
             return t.GetVector();
         }
 
-        static Quaternion MakeQFromEulerAngles(float x, float y, float z)
+        public static Quaternion MakeQFromEulerAngles(float x, float y, float z)
         {
             Quaternion q;
             double roll = MathUtil.DegreesToRadians(x);
@@ -155,7 +155,7 @@ namespace FlightSim.NET
             return q;
         }
 
-        static Vector MakeEulerAnglesFromQ(Quaternion q)
+        public static Vector MakeEulerAnglesFromQ(Quaternion q)
         {
             double r11, r21, r31, r32, r33, r12, r13;
             double q00, q11, q22, q33;
@@ -193,7 +193,7 @@ namespace FlightSim.NET
 
         public override string ToString()
         {
-            return $"[{v.x},{v.y},{v.z},{n}]";
+            return $"[{v.x:0.00}; {v.y:0.00}; {v.z:0.00}; {n:0.00}]";
         }
     }
 }

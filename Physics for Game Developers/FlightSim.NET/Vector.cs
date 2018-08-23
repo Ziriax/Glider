@@ -94,7 +94,7 @@
 
         public override string ToString()
         {
-            return $"({x}, {y}. {z}";
+            return $"({x:0.00}; {y:0.00}; {z:0.00}";
         }
     }
 }

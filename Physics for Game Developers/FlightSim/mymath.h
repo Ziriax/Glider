@@ -3,6 +3,7 @@
 
 #include <math.h>
 #include <ostream>
+#include <iomanip>
 
 namespace MathUtil
 {
@@ -165,7 +166,7 @@ public:
 
 	friend std::ostream& operator<<(std::ostream& os, const Vector& v)
 	{
-		os << '(' << v.x << ',' << v.y << ',' << v.z << ')';
+		os << std::fixed << std::setprecision(2) << '(' << v.x << "; " << v.y << "; " << v.z << ')';
 		return os;
 	}
 };
@@ -637,7 +638,7 @@ public:
 
 	friend std::ostream& operator<<(std::ostream& os, const Quaternion& q)
 	{
-		os << '[' << q.v.x << ',' << q.v.y << ',' << q.v.z << ',' << q.n << ']';
+		os << std::fixed << std::setprecision(2) << '[' << q.v.x << "; " << q.v.y << "; " << q.v.z << "; " << q.n << ']';
 		return os;
 	}
 

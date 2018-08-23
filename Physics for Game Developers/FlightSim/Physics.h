@@ -70,8 +70,6 @@ struct RigidBody
 // testing...
 	Vector p1, p2;
 	// ... end testing
-
-
 };
 
 struct BodyElement
@@ -106,14 +104,13 @@ public:
 	// This function also calls another function to calculate the plane's mass
 	// properties.
 	//------------------------------------------------------------------------//
-	void	InitializeAirplane()
+	Glider(Vector initialPosition = Vector())
 	{
 		float iRoll, iPitch, iYaw;
 
 		// Set initial position
-		Airplane.vPosition.x = -5000.0f;
-		Airplane.vPosition.y = 0.0f;
-		Airplane.vPosition.z = 2000.0f;
+		Airplane.vPosition = initialPosition;
+		//.x = -5000.0f;= 0.0f; = 2000.0f;
 
 		// Set initial velocity
 		Airplane.vVelocity.x = 60.0f;

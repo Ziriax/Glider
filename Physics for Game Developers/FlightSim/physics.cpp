@@ -25,16 +25,24 @@ using namespace std;
 
 void main()
 {
+	cout << "C++" << endl;
+
 	const float dt = 0.1;
 
 	Glider glider;
 
-	cout << "pos: " << glider.Airplane.vPosition << " rot: " << glider.Airplane.qOrientation << endl;
+	for (int i = 0; i < 10; ++i)
+	{
+		cout << "pos: " << glider.Airplane.vPosition << " rot: " << glider.Airplane.qOrientation << endl;
+		glider.StepSimulation(dt);
 
-	glider.StepSimulation(dt);
+		switch (i)
+		{
+		case 5:
+			glider.PitchDown();
+			break;
+		}
+	}
 
-	cout << "pos: " << glider.Airplane.vPosition << " rot: " << glider.Airplane.qOrientation << endl;
-
-	printf("Hello\n");
 	getchar();
 }

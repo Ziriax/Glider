@@ -35,7 +35,7 @@
             return new Matrix3x3(e11, e21, e31, e12, e22, e32, e13, e23, e33);
         }
 
-        Matrix3x3 Inverse()
+        public Matrix3x3 Inverse()
         {
             float d = e11 * e22 * e33 -
                 e11 * e32 * e23 +
