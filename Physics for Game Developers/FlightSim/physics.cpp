@@ -12,6 +12,7 @@
 */
 //----------------------------------------------------------------------------------------------------//
 #include "Physics.h"
+#include <cstdio>
 
 #define	_DTHRUST	10.0f
 #define	_MAXTHRUST	3000.0f
@@ -75,7 +76,7 @@ void	InitializeAirplane(void)
 	iRoll = 0.0f;
 	iPitch = 0.0f;
 	iYaw = 0.0f;
-	Airplane.qOrientation = MakeQFromEulerAngles(iRoll, iPitch, iYaw);
+	Airplane.qOrientation = Quaternion::MakeQFromEulerAngles(iRoll, iPitch, iYaw);
 	
 	// Now go ahead and calculate the plane's mass properties
 	CalcAirplaneMassProperties();
@@ -183,8 +184,8 @@ void	CalcAirplaneMassProperties(void)
 	// lift and drag calculations.
 	for (i = 0; i< 8; i++)
 	{
-		in = DegreesToRadians(Element[i].fIncidence);
-		di = DegreesToRadians(Element[i].fDihedral);
+		in = Math::DegreesToRadians(Element[i].fIncidence);
+		di = Math::DegreesToRadians(Element[i].fDihedral);
 		Element[i].vNormal = Vector((float)sin(in), (float)(cos(in)*sin(di)), (float)(cos(in)*cos(di)));
 		Element[i].vNormal.Normalize();
 	}
@@ -276,8 +277,8 @@ void	CalcAirplaneLoads(void)
 		if (i == 6) // The tail/rudder is a special case since it can rotate
 		{           // thus you have to recalculate the normal vector
 			float in, di;
-			in = DegreesToRadians(Element[i].fIncidence); // incidence angle
-			di = DegreesToRadians(Element[i].fDihedral);  // dihedral angle
+			in = Math::DegreesToRadians(Element[i].fIncidence); // incidence angle
+			di = Math::DegreesToRadians(Element[i].fDihedral);  // dihedral angle
 			Element[i].vNormal = Vector(	(float)sin(in), 
 											(float)(cos(in)*sin(di)), 
 											(float)(cos(in)*cos(di))); // surface normal vector
@@ -312,10 +313,10 @@ void	CalcAirplaneLoads(void)
 		tmp = vDragVector*Element[i].vNormal;
 		if(tmp > 1.) tmp = 1;
 		if(tmp < -1) tmp = -1;
-		fAttackAngle = RadiansToDegrees((float) asin(tmp));
+		fAttackAngle = Math::RadiansToDegrees((float) asin(tmp));
 
 		// Determine the resultant force (lift and drag) on the element.
-		tmp = 0.5f * rho * fLocalSpeed*fLocalSpeed * Element[i].fArea;		
+		tmp = 0.5f * Math::rho * fLocalSpeed*fLocalSpeed * Element[i].fArea;
 		if (i == 6) // Tail/rudder
 		{
 			vResultant =	(vLiftVector*RudderLiftCoefficient(fAttackAngle) +
@@ -349,10 +350,10 @@ void	CalcAirplaneLoads(void)
 	Fb += Thrust;
 
 	// Convert forces from model space to earth space
-	Airplane.vForces = QVRotate(Airplane.qOrientation, Fb);
+	Airplane.vForces = Quaternion::QVRotate(Airplane.qOrientation, Fb);
 
 	// Apply gravity (g is defined as -32.174 ft/s^2)
-	Airplane.vForces.z += g * Airplane.fMass;
+	Airplane.vForces.z += Math::g * Airplane.fMass;
 
 	// experimental spring connecting the plane to a point 2000 ft above
 	// the earth-space origin.
@@ -454,7 +455,7 @@ void	StepSimulation(float dt)
 
 		// calculate the velocity in body space:
 		// (we'll need this to calculate lift and drag forces)
-		Airplane.vVelocityBody = QVRotate(~Airplane.qOrientation, Airplane.vVelocity);
+		Airplane.vVelocityBody = Quaternion::QVRotate(~Airplane.qOrientation, Airplane.vVelocity);
 		
 		// calculate the air speed:
 		Airplane.fSpeed = Airplane.vVelocity.Magnitude();
@@ -462,7 +463,7 @@ void	StepSimulation(float dt)
 		// get the Euler angles for our information
 		Vector u;
 		
-		u = MakeEulerAnglesFromQ(Airplane.qOrientation);
+		u = Quaternion::MakeEulerAnglesFromQ(Airplane.qOrientation);
 		Airplane.vEulerAngles.x = u.x;	// roll
 		Airplane.vEulerAngles.y = u.y;	// pitch
 		Airplane.vEulerAngles.z = u.z;	// yaw
@@ -552,7 +553,7 @@ Vector	GetBodyZAxisVector(void)
 	v.y = 0.0f;
 	v.z = 1.0f;
 
-	return QVRotate(Airplane.qOrientation, v);
+	return Quaternion::QVRotate(Airplane.qOrientation, v);
 }
 
 //------------------------------------------------------------------------//
@@ -567,7 +568,7 @@ Vector	GetBodyXAxisVector(void)
 	v.y = 0.0f;
 	v.z = 0.0f;
 
-	return QVRotate(Airplane.qOrientation, v);
+	return Quaternion::QVRotate(Airplane.qOrientation, v);
 	
 }
 
@@ -823,4 +824,11 @@ void	ZeroFlaps(void)
 	Element[1].iFlap = 0;
 	Element[2].iFlap = 0;
 	Flaps = false;
+}
+
+
+void main()
+{
+	printf("Hello\n");
+	getchar();
 }
