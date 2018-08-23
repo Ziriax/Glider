@@ -5,19 +5,39 @@ VisualStudioVersion = 15.0.27703.2047
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FlightSim", "FlightSim.vcxproj", "{BA90373E-D11C-4B29-929E-E98E3DA8C9DD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightSim.NET", "..\FlightSim.NET\FlightSim.NET.csproj", "{5DF5995A-18C5-4E2E-AFC3-BF53E8FC9888}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
 		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
 		Release|x86 = Release|x86
+		Template|Any CPU = Template|Any CPU
 		Template|x86 = Template|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BA90373E-D11C-4B29-929E-E98E3DA8C9DD}.Debug|Any CPU.ActiveCfg = Debug|Win32
 		{BA90373E-D11C-4B29-929E-E98E3DA8C9DD}.Debug|x86.ActiveCfg = Debug|Win32
 		{BA90373E-D11C-4B29-929E-E98E3DA8C9DD}.Debug|x86.Build.0 = Debug|Win32
+		{BA90373E-D11C-4B29-929E-E98E3DA8C9DD}.Release|Any CPU.ActiveCfg = Release|Win32
 		{BA90373E-D11C-4B29-929E-E98E3DA8C9DD}.Release|x86.ActiveCfg = Release|Win32
 		{BA90373E-D11C-4B29-929E-E98E3DA8C9DD}.Release|x86.Build.0 = Release|Win32
+		{BA90373E-D11C-4B29-929E-E98E3DA8C9DD}.Template|Any CPU.ActiveCfg = Template|Win32
 		{BA90373E-D11C-4B29-929E-E98E3DA8C9DD}.Template|x86.ActiveCfg = Template|Win32
 		{BA90373E-D11C-4B29-929E-E98E3DA8C9DD}.Template|x86.Build.0 = Template|Win32
+		{5DF5995A-18C5-4E2E-AFC3-BF53E8FC9888}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DF5995A-18C5-4E2E-AFC3-BF53E8FC9888}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DF5995A-18C5-4E2E-AFC3-BF53E8FC9888}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5DF5995A-18C5-4E2E-AFC3-BF53E8FC9888}.Debug|x86.Build.0 = Debug|Any CPU
+		{5DF5995A-18C5-4E2E-AFC3-BF53E8FC9888}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DF5995A-18C5-4E2E-AFC3-BF53E8FC9888}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DF5995A-18C5-4E2E-AFC3-BF53E8FC9888}.Release|x86.ActiveCfg = Release|Any CPU
+		{5DF5995A-18C5-4E2E-AFC3-BF53E8FC9888}.Release|x86.Build.0 = Release|Any CPU
+		{5DF5995A-18C5-4E2E-AFC3-BF53E8FC9888}.Template|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DF5995A-18C5-4E2E-AFC3-BF53E8FC9888}.Template|Any CPU.Build.0 = Debug|Any CPU
+		{5DF5995A-18C5-4E2E-AFC3-BF53E8FC9888}.Template|x86.ActiveCfg = Debug|Any CPU
+		{5DF5995A-18C5-4E2E-AFC3-BF53E8FC9888}.Template|x86.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

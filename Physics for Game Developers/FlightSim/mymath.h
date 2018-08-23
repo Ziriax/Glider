@@ -2,8 +2,9 @@
 #define _MYMATH
 
 #include <math.h>
+#include <ostream>
 
-namespace Math
+namespace MathUtil
 {
 	//------------------------------------------------------------------------//
 	// Misc. Constants
@@ -30,13 +31,14 @@ namespace Math
 //------------------------------------------------------------------------//
 // Vector Class and vector functions
 //------------------------------------------------------------------------//
-class Vector {
+class Vector 
+{
 public:
 	float x;
 	float y;
 	float z;
 
-	Vector(void)
+	Vector()
 	{
 		x = 0;
 		y = 0;
@@ -58,16 +60,16 @@ public:
 	void  Normalize()
 	{
 		float m = (float)sqrt(x*x + y * y + z * z);
-		if (m <= Math::tol)
+		if (m <= MathUtil::tol)
 			m = 1;
 
 		x /= m;
 		y /= m;
 		z /= m;
 
-		if (fabs(x) < Math::tol) x = 0.0f;
-		if (fabs(y) < Math::tol) y = 0.0f;
-		if (fabs(z) < Math::tol) z = 0.0f;
+		if (fabs(x) < MathUtil::tol) x = 0.0f;
+		if (fabs(y) < MathUtil::tol) y = 0.0f;
+		if (fabs(z) < MathUtil::tol) z = 0.0f;
 	}
 
 	void  Reverse()
@@ -109,7 +111,7 @@ public:
 		return *this;
 	}
 
-	Vector operator-(void)
+	Vector operator-()
 	{
 		return Vector(-x, -y, -z);
 	}
@@ -160,6 +162,12 @@ public:
 			(u.y * (-v.x*w.z + v.z*w.x)) +
 			(u.z * (v.x*w.y - v.y*w.x)));
 	}
+
+	friend std::ostream& operator<<(std::ostream& os, const Vector& v)
+	{
+		os << '(' << v.x << ',' << v.y << ',' << v.z << ')';
+		return os;
+	}
 };
 
 //------------------------------------------------------------------------//
@@ -171,7 +179,7 @@ public:
 	// elements eij: i -> row, j -> column
 	float	e11, e12, e13, e21, e22, e23, e31, e32, e33;
 
-	Matrix3x3(void)
+	Matrix3x3()
 	{
 		e11 = 0;
 		e12 = 0;
@@ -199,7 +207,7 @@ public:
 		e33 = r3c3;
 	}
 
-	float	det(void)
+	float	det()
 	{
 		return	e11 * e22*e33 -
 			e11 * e32*e23 +
@@ -209,12 +217,12 @@ public:
 			e31 * e22*e13;
 	}
 
-	Matrix3x3	Transpose(void)
+	Matrix3x3	Transpose()
 	{
 		return Matrix3x3(e11, e21, e31, e12, e22, e32, e13, e23, e33);
 	}
 
-	Matrix3x3	Inverse(void)
+	Matrix3x3	Inverse()
 	{
 		float	d = e11 * e22*e33 -
 			e11 * e32*e23 +
@@ -399,7 +407,7 @@ public:
 	float	n;	// number (scalar) part
 	Vector	v;	// vector part: v.x, v.y, v.z
 
-	Quaternion(void)
+	Quaternion()
 	{
 		n = 0;
 		v.x = 0;
@@ -415,17 +423,17 @@ public:
 		v.z = e3;
 	}
 
-	float	Magnitude(void)
+	float	Magnitude()
 	{
 		return (float)sqrt(n*n + v.x*v.x + v.y*v.y + v.z*v.z);
 	}
 
-	Vector	GetVector(void)
+	Vector	GetVector()
 	{
 		return Vector(v.x, v.y, v.z);
 	}
 
-	float	GetScalar(void)
+	float	GetScalar()
 	{
 		return n;
 	}
@@ -467,7 +475,7 @@ public:
 	}
 
 	// Conjugate
-	Quaternion	operator~(void) const
+	Quaternion	operator~() const
 	{
 		return Quaternion(n, -v.x, -v.y, -v.z);
 	}
@@ -540,7 +548,7 @@ public:
 		v = q.GetVector();
 		m = v.Magnitude();
 
-		if (m <= Math::tol)
+		if (m <= MathUtil::tol)
 			return Vector();
 		else
 			return v / m;
@@ -564,9 +572,9 @@ public:
 	static Quaternion	MakeQFromEulerAngles(float x, float y, float z)
 	{
 		Quaternion	q;
-		double	roll = Math::DegreesToRadians(x);
-		double	pitch = Math::DegreesToRadians(y);
-		double	yaw = Math::DegreesToRadians(z);
+		double	roll = MathUtil::DegreesToRadians(x);
+		double	pitch = MathUtil::DegreesToRadians(y);
+		double	yaw = MathUtil::DegreesToRadians(z);
 
 		double	cyaw, cpitch, croll, syaw, spitch, sroll;
 		double	cyawcpitch, syawspitch, cyawspitch, syawcpitch;
@@ -615,19 +623,24 @@ public:
 			r12 = 2 * (q.v.x*q.v.y - q.n*q.v.z);
 			r13 = 2 * (q.v.x*q.v.z + q.n*q.v.y);
 
-			u.x = Math::RadiansToDegrees(0.0f); //roll
-			u.y = Math::RadiansToDegrees((float)(-(Math::pi / 2) * r31 / tmp)); // pitch
-			u.z = Math::RadiansToDegrees((float)atan2(-r12, -r31 * r13)); // yaw
+			u.x = MathUtil::RadiansToDegrees(0.0f); //roll
+			u.y = MathUtil::RadiansToDegrees((float)(-(MathUtil::pi / 2) * r31 / tmp)); // pitch
+			u.z = MathUtil::RadiansToDegrees((float)atan2(-r12, -r31 * r13)); // yaw
 			return u;
 		}
 
-		u.x = Math::RadiansToDegrees((float)atan2(r32, r33)); // roll
-		u.y = Math::RadiansToDegrees((float)asin(-r31));		 // pitch
-		u.z = Math::RadiansToDegrees((float)atan2(r21, r11)); // yaw
+		u.x = MathUtil::RadiansToDegrees((float)atan2(r32, r33)); // roll
+		u.y = MathUtil::RadiansToDegrees((float)asin(-r31));		 // pitch
+		u.z = MathUtil::RadiansToDegrees((float)atan2(r21, r11)); // yaw
 		return u;
-
-
 	}
+
+	friend std::ostream& operator<<(std::ostream& os, const Quaternion& q)
+	{
+		os << '[' << q.v.x << ',' << q.v.y << ',' << q.v.z << ',' << q.n << ']';
+		return os;
+	}
+
 };
 
 #endif
